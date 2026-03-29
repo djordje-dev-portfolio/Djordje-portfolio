@@ -1,0 +1,8 @@
+packages:
+  "framer-motion": "For premium smooth scroll reveals and layout animations"
+
+images: []
+
+notes:
+  - "The project relies entirely on CSS/Canvas for the hero animation and Unsplash for portfolio images."
+  - "Navigation uses smooth scrolling to section IDs for the single-page experience."

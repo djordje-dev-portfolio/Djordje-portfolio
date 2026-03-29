@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/portfolio/"
+title = "Djordje Resolved — Portfolio"
+version = "1.0.0"
+id = "artifacts/djordje-portfolio"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/portfolio/" ]
+localPort = 21354
+
+[services.development]
+run = "pnpm --filter @workspace/djordje-portfolio run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/djordje-portfolio", "run", "build" ]
+publicDir = "artifacts/djordje-portfolio/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21354"
+BASE_PATH = "/portfolio/"

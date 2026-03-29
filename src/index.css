@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Rajdhani:wght@500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Rajdhani', sans-serif;
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+:root {
+  /* Dark Tech Digital Agency Theme */
+  --background: 220 60% 6%; /* #050a14 */
+  --foreground: 210 100% 96%; /* #e8f4ff */
+  
+  --primary: 191 100% 50%; /* #00d4ff electric cyan */
+  --primary-foreground: 220 60% 6%;
+  
+  --secondary: 263 75% 57%; /* #7c3aed purple */
+  --secondary-foreground: 210 100% 96%;
+  
+  --card: 220 40% 10%;
+  --card-foreground: 210 100% 96%;
+  
+  --border: 220 30% 20%;
+  --input: 220 30% 20%;
+  --ring: 191 100% 50%;
+  
+  --muted: 220 40% 15%;
+  --muted-foreground: 215 20% 65%;
+  
+  --accent: 191 100% 50%;
+  --accent-foreground: 220 60% 6%;
+  
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-primary/30 selection:text-primary overflow-x-hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer utilities {
+  .text-stroke-white {
+    -webkit-text-stroke: 1px rgba(232, 244, 255, 0.4);
+    color: transparent;
+  }
+  
+  .text-stroke-cyan {
+    -webkit-text-stroke: 1px hsl(var(--primary));
+    color: transparent;
+  }
+
+  @media (min-width: 768px) {
+    .text-stroke-white {
+      -webkit-text-stroke: 2px rgba(232, 244, 255, 0.4);
+    }
+    .text-stroke-cyan {
+      -webkit-text-stroke: 2px hsl(var(--primary));
+    }
+  }
+
+  .glow-text-cyan {
+    text-shadow: 0 0 20px hsla(var(--primary) / 0.5);
+  }
+  
+  .glow-box-cyan {
+    box-shadow: 0 0 20px hsla(var(--primary) / 0.2);
+  }
+}
