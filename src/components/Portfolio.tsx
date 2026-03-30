@@ -36,7 +36,7 @@ const projects = [
     tags: ["React", "Tailwind CSS", "Luxury Design", "Vite"],
     image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80&auto=format&fit=crop",
     gradient: "from-amber-600 to-yellow-500",
-    link: "/",
+    link: "https://gastro-six-lime.vercel.app/",
     external: true,
   },
   {
@@ -45,7 +45,7 @@ const projects = [
     tags: ["React", "Vite", "Tailwind CSS", "E-Commerce"],
     image: "https://images.unsplash.com/photo-1593640408182-31c228f2c6f9?w=800&q=80&auto=format&fit=crop",
     gradient: "from-cyan-400 to-violet-600",
-    link: "/neonpc-store/",
+    link: "https://neon-ten-ashen.vercel.app/",
     external: true,
   },
   {
@@ -54,7 +54,7 @@ const projects = [
     tags: ["React", "Vite", "Tailwind CSS", "Travel & Tourism"],
     image: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?w=800&q=80&auto=format&fit=crop",
     gradient: "from-blue-500 to-yellow-400",
-    link: "/aria-travel/",
+    link: "https://a1m-travel.vercel.app/",
     external: true,
   },
 ];
