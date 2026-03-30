@@ -1,6 +1,7 @@
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, ArrowRight } from "lucide-react";
+import emailjs from "@emailjs/browser";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Contact() {
@@ -9,16 +10,43 @@ export default function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleContactSubmit = (e: FormEvent) => {
+  const handleContactSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-    window.open(`mailto:djordje.milosavljevic89@gmail.com?subject=${subject}&body=${body}`, "_blank");
-    toast({
-      title: "Email client opened!",
-      description: "Your message is ready — just hit send.",
-    });
+    if (!formRef.current) return;
+
+    try {
+      setIsSending(true);
+      setIsSuccess(false);
+
+      await emailjs.sendForm(
+        "YOUR_SERVICE_ID",
+        "YOUR_TEMPLATE_ID",
+        formRef.current,
+        "YOUR_PUBLIC_KEY",
+      );
+
+      setName("");
+      setEmail("");
+      setMessage("");
+      setIsSuccess(true);
+      toast({
+        title: "Uspesno",
+        description: "Poruka je poslata.",
+      });
+    } catch {
+      setIsSuccess(false);
+      toast({
+        title: "Greska",
+        description: "Slanje poruke nije uspelo. Pokusaj ponovo.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -71,53 +99,64 @@ export default function Contact() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
+              ref={formRef}
               onSubmit={handleContactSubmit}
-              className="flex flex-col gap-5 bg-background/50 p-8 rounded-2xl border border-border backdrop-blur-sm"
+              className="flex flex-col gap-5 bg-background/50 p-8 rounded-2xl border border-primary/40 glow-box-cyan backdrop-blur-sm"
             >
               <div className="flex flex-col gap-2">
                 <label htmlFor="name" className="text-sm font-semibold text-foreground/80">Name</label>
                 <input 
                   id="name" 
+                  name="from_name"
                   type="text" 
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="John Doe"
-                  className="bg-background border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                  className="bg-background/70 border border-primary/30 rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/60 transition-all glow-box-cyan"
                 />
               </div>
               <div className="flex flex-col gap-2">
                 <label htmlFor="email" className="text-sm font-semibold text-foreground/80">Email</label>
                 <input 
                   id="email" 
+                  name="from_email"
                   type="email" 
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="john@example.com"
-                  className="bg-background border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                  className="bg-background/70 border border-primary/30 rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/60 transition-all glow-box-cyan"
                 />
               </div>
               <div className="flex flex-col gap-2">
                 <label htmlFor="message" className="text-sm font-semibold text-foreground/80">Message</label>
                 <textarea 
                   id="message" 
+                  name="message"
                   rows={4}
                   required
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Tell me about your project..."
-                  className="bg-background border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all resize-none"
+                  className="bg-background/70 border border-primary/30 rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/60 transition-all resize-none glow-box-cyan"
                 />
               </div>
               
               <button 
                 type="submit"
-                className="group w-full py-4 mt-2 bg-foreground text-background font-display font-bold text-lg rounded-lg hover:bg-primary transition-colors flex items-center justify-center gap-2 glow-box-cyan"
+                disabled={isSending}
+                className="group w-full py-4 mt-2 bg-primary text-primary-foreground font-display font-bold text-lg rounded-lg hover:bg-white hover:text-background transition-colors flex items-center justify-center gap-2 glow-box-cyan disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                SEND MESSAGE
+                {isSending ? "SENDING..." : "SEND MESSAGE"}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
+
+              {isSuccess && (
+                <p className="text-sm text-primary glow-text-cyan font-semibold text-center">
+                  Uspesno
+                </p>
+              )}
             </motion.form>
           </div>
         </div>
