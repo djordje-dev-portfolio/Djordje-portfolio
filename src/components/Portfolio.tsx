@@ -50,7 +50,7 @@ const projects = [
   },
   {
     id: 6,
-    title: "Aria Travel — Turistička Agencija",
+    title: "A1M Travel — Turistička Agencija",
     tags: ["React", "Vite", "Tailwind CSS", "Travel & Tourism"],
     image: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?w=800&q=80&auto=format&fit=crop",
     gradient: "from-blue-500 to-yellow-400",
